@@ -1,0 +1,15 @@
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\bin\Debug\net7.0\Calendar.exe
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\bin\Debug\net7.0\Calendar.deps.json
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\bin\Debug\net7.0\Calendar.runtimeconfig.json
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\bin\Debug\net7.0\Calendar.dll
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\bin\Debug\net7.0\Calendar.pdb
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.csproj.AssemblyReference.cache
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.AssemblyInfoInputs.cache
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.AssemblyInfo.cs
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.csproj.CoreCompileInputs.cache
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.dll
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\refint\Calendar.dll
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.pdb
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.genruntimeconfig.cache
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\ref\Calendar.dll
