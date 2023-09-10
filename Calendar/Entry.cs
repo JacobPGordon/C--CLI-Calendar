@@ -1,13 +1,15 @@
 
-using System.ComponentModel;
 
 public class Entry{
     //A datetime representation of the date entered for this item
-    DateTime date;
+    public DateTime date {get; set;}
     //The actual text of the item
-    String? desc;
+    public string desc {get; set;}
     //The number of minutes that the program should wait for to repeat its warning
-    int? repeat;
+    public int repeat {get; set;}
+    //used for quick reference; cosntructed by hashing the description plus a string representation of the date 
+    public byte[] id {get; set;}
+
     
 
 

@@ -1,34 +1,82 @@
-﻿string DFILE = "./dates_file";
-Entry[] dates;
+﻿//CSV Assistance from CsvHelper library https://joshclose.github.io/CsvHelper/
 
-void add_date(){
+using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
+using CsvHelper;
+
+//constant for the dates file
+string DFILE = "./dates_file.csv";
+List<Entry> dates = new List<Entry>();
+
+//handles adding dates to the internal listing
+void add_date(string in_date, string in_desc, int in_repeat){
+
+    //preparing the bytes for hashing
+    byte[] hashable = ASCIIEncoding.ASCII.GetBytes(in_date+in_desc);
+    
+    Entry new_entry = new Entry
+    {
+        date = DateTime.Parse(in_date),
+        desc = in_desc,
+        repeat = in_repeat,
+        id = MD5.HashData(hashable),
+    };
+    
+    dates.Add(new_entry);
+    
+}
+
+void remove_date(byte[] id){
+
+    int index = dates.FindIndex(i => i.id == id);
+    dates.RemoveAt(index);
 
 }
 
-void remove_date(){
-
+//every thirty seconds or upon closing the application, the date file is automatically updated; due to the limitations of CSV-Helper it
+//has to be recreated
+void update_date_file(){
+    File.Delete(DFILE);
+    using (var writer = new StreamWriter(DFILE))
+    using (var csv_writer = new CsvWriter(writer, CultureInfo.InvariantCulture)){
+        csv_writer.WriteRecords(dates);
+    }    
 }
 
 
 //Fetch dates from the file upon load
 void load_dates(){
-    //Using streamreader we can read the file line by line easily
-    using (StreamReader sr = new StreamReader(DFILE)){
-        while (sr.Peek() >= 0){
-            string currentDate = sr.ReadLine();
-            string[] split = currentDate.Split(";");
+
+    //quick initialization for first run (or if the user deleted the file for whatever reason)
+    if (!File.Exists(DFILE)){
+        using (StreamWriter writer = File.AppendText(DFILE)){
+            writer.WriteLine("id,date,desc,repeat");
         }
+        return;
     }
-}
+
+    //Otherwise, we load the file and use CSVHelper to write 
+    using (var reader = new StreamReader(DFILE))
+    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture)){
+        var date = new Entry();
+        var read_dates = csv.EnumerateRecords(date);
+        foreach (var row in read_dates){
+            dates.Add(date);
+        }
 
 
-//Creating data file if it doesn't yet exist
-if(!File.Exists(DFILE)){
+
+    }
+    return;
+
     
-    using (FileStream fs = File.Create(DFILE));
-
 }
 
-load_dates();
+
+
+
+
+
 
 

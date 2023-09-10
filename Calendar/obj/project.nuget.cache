@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "HR6DrvwE6bm/87MbnQrmfrYM2s8MeAmmcJeXFAB2v4UBPEhAb5YkY4L4oZ385XRHSfNsN2HrL8Xx4hFxG5u3Ew==",
+  "dgSpecHash": "7HGiZtsvN6IpPivuLDV2lcihfkSwFxq8xE/cOhYj18/R9vV698Wdfe0I5A2SJYTfNA5m3xJY38BCX1qhP0J77w==",
   "success": true,
   "projectFilePath": "C:\\Users\\jkego\\Desktop\\CsharpProjects\\Calendar\\Calendar.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\jkego\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
