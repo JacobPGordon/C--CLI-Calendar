@@ -1,13 +1,17 @@
 ﻿//CSV Assistance from CsvHelper library https://joshclose.github.io/CsvHelper/
 
+using System.Collections;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using CsvHelper;
 
 //constant for the dates file
 string DFILE = "./dates_file.csv";
 List<Entry> dates = new List<Entry>();
+STATES CURRENT_STATE = STATES.START;
+
 
 //handles adding dates to the internal listing
 void add_date(string in_date, string in_desc, int in_repeat){
@@ -34,7 +38,7 @@ void remove_date(byte[] id){
 
 }
 
-//every thirty seconds or upon closing the application, the date file is automatically updated; due to the limitations of CSV-Helper it
+//every sixty seconds or upon closing the application, the date file is automatically updated; due to the limitations of CSV-Helper it
 //has to be recreated
 void update_date_file(){
     File.Delete(DFILE);
@@ -70,7 +74,36 @@ void load_dates(){
     }
     return;
 
+}
+
+
+Console.Clear();
+while(true){
+    switch(CURRENT_STATE){
+
+        case STATES.START:
+            Console.WriteLine("_______________");
+            int i=0;
+            while(i < 4){
+                Console.WriteLine("|_|_|_|_|_|_|_|");
+                i++;
+            }
     
+            Console.WriteLine("\n\nWelcome back!");
+            Console.WriteLine("Please press enter to continue");
+            while(Console.ReadKey().Key != ConsoleKey.Enter){
+
+            }
+            CURRENT_STATE = STATES.CALENDAR;
+            break;
+
+        default:
+            break;
+
+    }
+
+  
+
 }
 
 
@@ -78,5 +111,8 @@ void load_dates(){
 
 
 
-
+enum STATES{
+    START,
+    CALENDAR,
+}
 

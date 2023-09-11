@@ -13,3 +13,5 @@ C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\refint\Calendar.
 C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.pdb
 C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.genruntimeconfig.cache
 C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\ref\Calendar.dll
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\bin\Debug\net7.0\CsvHelper.dll
+C:\Users\jkego\Desktop\CsharpProjects\Calendar\obj\Debug\net7.0\Calendar.csproj.CopyComplete
