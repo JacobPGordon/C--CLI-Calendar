@@ -91,13 +91,12 @@ while(true){
     
             Console.WriteLine("\n\nWelcome back!");
             Console.WriteLine("Please press enter to continue");
-            while(Console.ReadKey().Key != ConsoleKey.Enter){
-
-            }
+            while(Console.ReadKey(true).Key != ConsoleKey.Enter);
             CURRENT_STATE = STATES.CALENDAR;
             break;
 
         default:
+            Console.WriteLine("Henmlo");
             break;
 
     }
