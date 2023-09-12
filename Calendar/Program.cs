@@ -1,11 +1,14 @@
 ﻿//CSV Assistance from CsvHelper library https://joshclose.github.io/CsvHelper/
 
 using System.Collections;
+using System.ComponentModel;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using CsvHelper;
+using System.Threading;
+using System.Timers;
 
 //constant for the dates file
 string DFILE = "./dates_file.csv";
@@ -41,11 +44,21 @@ void remove_date(byte[] id){
 //every sixty seconds or upon closing the application, the date file is automatically updated; due to the limitations of CSV-Helper it
 //has to be recreated
 void update_date_file(){
-    File.Delete(DFILE);
-    using (var writer = new StreamWriter(DFILE))
+    using (var writer = new StreamWriter("./TEMP", false))
     using (var csv_writer = new CsvWriter(writer, CultureInfo.InvariantCulture)){
         csv_writer.WriteRecords(dates);
-    }    
+    }
+    File.Move("./TEMP", DFILE,true);    
+    Console.WriteLine("TEST");
+}
+
+void SaveOnClose(){
+    using (var writer = new StreamWriter("./TEMP", false))
+    using (var csv_writer = new CsvWriter(writer, CultureInfo.InvariantCulture)){
+        csv_writer.WriteRecords(dates);
+    }
+    File.Move("./TEMP", DFILE,true);    
+    Console.WriteLine("TEST");
 }
 
 
@@ -77,9 +90,20 @@ void load_dates(){
 }
 
 
+
+//Initializing variables for runtime
 Console.Clear();
 bool ACTIVE = true;
+load_dates();
+
+//initializing autosave timer
+System.Timers.Timer autosave = new System.Timers.Timer(30000);
+autosave.Elapsed += (sender,e) => update_date_file();
+
+autosave.Start();
+
 while(ACTIVE){
+
     switch(CURRENT_STATE){
 
         case STATES.START:
@@ -102,6 +126,7 @@ while(ACTIVE){
         default:
             Console.Clear();
             Console.WriteLine("Unexpected application state entered. Saving and shutting down.");
+            autosave.Stop();
             update_date_file();
             ACTIVE = false;
             break;
@@ -111,9 +136,6 @@ while(ACTIVE){
   
 
 }
-
-
-
 
 
 
