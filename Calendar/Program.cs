@@ -78,7 +78,8 @@ void load_dates(){
 
 
 Console.Clear();
-while(true){
+bool ACTIVE = true;
+while(ACTIVE){
     switch(CURRENT_STATE){
 
         case STATES.START:
@@ -95,8 +96,14 @@ while(true){
             CURRENT_STATE = STATES.CALENDAR;
             break;
 
+        case STATES.CALENDAR:
+
+
         default:
-            Console.WriteLine("Henmlo");
+            Console.Clear();
+            Console.WriteLine("Unexpected application state entered. Saving and shutting down.");
+            update_date_file();
+            ACTIVE = false;
             break;
 
     }
