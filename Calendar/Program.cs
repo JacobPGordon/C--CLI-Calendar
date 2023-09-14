@@ -52,14 +52,6 @@ void update_date_file(){
     Console.WriteLine("TEST");
 }
 
-void SaveOnClose(){
-    using (var writer = new StreamWriter("./TEMP", false))
-    using (var csv_writer = new CsvWriter(writer, CultureInfo.InvariantCulture)){
-        csv_writer.WriteRecords(dates);
-    }
-    File.Move("./TEMP", DFILE,true);    
-    Console.WriteLine("TEST");
-}
 
 
 //Fetch dates from the file upon load
@@ -90,6 +82,19 @@ void load_dates(){
 }
 
 
+//Checks for user input and compares it to state to determine action
+STATES Controller(){
+    ConsoleKey current_key;
+    while(true){
+        current_key = Console.ReadKey(true).Key;
+        //Exit handler
+        if (current_key == ConsoleKey.E){
+            return STATES.EXIT;
+        }
+
+
+    }
+}
 
 //Initializing variables for runtime
 Console.Clear();
@@ -121,7 +126,30 @@ while(ACTIVE){
             break;
 
         case STATES.CALENDAR:
+            Console.Clear();
+            if (dates.Count == 0){
+                Console.WriteLine("No entries detected!");
+            }
 
+            else{
+
+              foreach (Entry date in dates){
+
+                }  
+
+            }
+
+            Console.WriteLine("\n (A)dd new entry, (D)elete entry, (E)xit application");
+            
+            CURRENT_STATE = Controller();
+            break;
+
+        case STATES.EXIT:
+            Console.Clear();
+            ACTIVE = false;
+            Console.WriteLine("Have a nice day!");
+            Thread.Sleep(1000);
+            break;
 
         default:
             Console.Clear();
@@ -142,5 +170,6 @@ while(ACTIVE){
 enum STATES{
     START,
     CALENDAR,
+    EXIT,
 }
 
