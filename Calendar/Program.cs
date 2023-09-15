@@ -9,6 +9,9 @@ using System.Text.RegularExpressions;
 using CsvHelper;
 using System.Threading;
 using System.Timers;
+using System.ComponentModel.DataAnnotations;
+
+
 
 //constant for the dates file
 string DFILE = "./dates_file.csv";
@@ -44,12 +47,21 @@ void remove_date(byte[] id){
 //every sixty seconds or upon closing the application, the date file is automatically updated; due to the limitations of CSV-Helper it
 //has to be recreated
 void update_date_file(){
+    STATES current_state = CURRENT_STATE;
     using (var writer = new StreamWriter("./TEMP", false))
     using (var csv_writer = new CsvWriter(writer, CultureInfo.InvariantCulture)){
         csv_writer.WriteRecords(dates);
     }
+
     File.Move("./TEMP", DFILE,true);    
-    Console.WriteLine("TEST");
+    Console.WriteLine("***Autosaved***");
+    Thread.Sleep(3000);
+    if(current_state == CURRENT_STATE){
+        Console.SetCursorPosition(0, Console.CursorTop-1);
+        Console.Write(new String(' ', Console.WindowWidth));
+        Console.SetCursorPosition(0, Console.CursorTop-1);
+    }
+    
 }
 
 
@@ -71,7 +83,7 @@ void load_dates(){
         var date = new Entry();
         var read_dates = csv.EnumerateRecords(date);
         foreach (var row in read_dates){
-            dates.Add(date);
+           dates.Add(row);
         }
 
 
@@ -87,10 +99,21 @@ STATES Controller(){
     ConsoleKey current_key;
     while(true){
         current_key = Console.ReadKey(true).Key;
-        //Exit handler
-        if (current_key == ConsoleKey.E){
-            return STATES.EXIT;
+
+        //Calendar page
+        if(CURRENT_STATE == STATES.CALENDAR){
+            //Exit handler
+            if (current_key == ConsoleKey.E){
+                return STATES.EXIT;
+            }
+            
+            //Adding date handler
+            if (current_key == ConsoleKey.A){
+                return STATES.ADD;
+            }
         }
+        
+        
 
 
     }
@@ -102,7 +125,7 @@ bool ACTIVE = true;
 load_dates();
 
 //initializing autosave timer
-System.Timers.Timer autosave = new System.Timers.Timer(30000);
+System.Timers.Timer autosave = new System.Timers.Timer(60000);
 autosave.Elapsed += (sender,e) => update_date_file();
 
 autosave.Start();
@@ -132,16 +155,62 @@ while(ACTIVE){
             }
 
             else{
-
+              //Displaying dates  
               foreach (Entry date in dates){
+        
+                Console.WriteLine("{0}: {1}", date.date.ToString("MM/dd/YYYY"), date.desc);
 
                 }  
 
             }
 
-            Console.WriteLine("\n (A)dd new entry, (D)elete entry, (E)xit application");
+            Console.WriteLine("\n(A)dd new entry, (D)elete entry, (E)xit application");
             
             CURRENT_STATE = Controller();
+            break;
+
+        case STATES.ADD:
+
+            Console.Clear();
+            Console.WriteLine("Please enter a date formatted in mm/dd/yyyy hh:mm");
+            
+            //Initializers for Event object
+            DateTime desired_date;
+            int desired_repeat;
+            string[] desired_desc;
+
+            //Getting the desired date from the user
+            
+            bool input_done = false;
+            while(input_done == false){
+                var input = Console.ReadLine();
+
+                //thank God for small miracles (no regex required)
+                if(DateTime.TryParseExact(input, "MM/dd/yyyy hh:mm", null, DateTimeStyles.None, out DateTime dt)){
+
+                    desired_date = dt;
+                    input_done = true;
+                    break;
+
+                }else{
+
+                    Console.WriteLine("Improper input! Press Enter to try again");
+                    //spaghetti code for resetting the text and cursor
+                    while(Console.ReadKey(true).Key != ConsoleKey.Enter);
+                    Console.SetCursorPosition(0, Console.CursorTop-1);
+                    Console.Write(new String(' ', Console.WindowWidth));
+                    Console.SetCursorPosition(0, Console.CursorTop-1);
+                    Console.Write(new String(' ', Console.WindowWidth));
+                    Console.SetCursorPosition(0, Console.CursorTop);
+                }
+                
+           }
+            
+           input_done = false;
+
+            
+
+
             break;
 
         case STATES.EXIT:
@@ -152,6 +221,8 @@ while(ACTIVE){
             break;
 
         default:
+
+            // if something goes terribly wrong or the code does something impossible we try to save and kill the app
             Console.Clear();
             Console.WriteLine("Unexpected application state entered. Saving and shutting down.");
             autosave.Stop();
@@ -171,5 +242,6 @@ enum STATES{
     START,
     CALENDAR,
     EXIT,
+    ADD,
 }
 
