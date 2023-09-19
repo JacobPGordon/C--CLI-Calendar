@@ -70,16 +70,16 @@ void clear_input(int preserved_lines){
     //counter for loops
     int i = 0;
     //used to decrement cursor
-    int line = 1;
-    int offset = preserved_lines+1;
+    int offset = Console.CursorTop-preserved_lines;
     while (i < offset){
         
-        Console.SetCursorPosition(0, Console.CursorTop-line);
+        Console.SetCursorPosition(0, Console.CursorTop-1);
         Console.Write(new String(' ', Console.WindowWidth));
         i++;
-        line++;
+
     }
-    Console.SetCursorPosition(0, Console.CursorTop-1);
+    Console.SetCursorPosition(0, Console.CursorTop);
+
     return;
 }
 
