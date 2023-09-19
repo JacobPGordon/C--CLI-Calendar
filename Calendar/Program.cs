@@ -10,6 +10,7 @@ using CsvHelper;
 using System.Threading;
 using System.Timers;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 
 
 
@@ -64,11 +65,21 @@ void update_date_file(){
     
 }
 
-void clear_input(){
-    Console.SetCursorPosition(0, Console.CursorTop-1);
-    Console.Write(new String(' ', Console.WindowWidth));
-    Console.SetCursorPosition(0, Console.CursorTop-1);
-    Console.Write(new String(' ', Console.WindowWidth));
+void clear_input(int preserved_lines){
+
+    //counter for loops
+    int i = 0;
+    //used to decrement cursor
+    int line = 1;
+    //used to cover error messages
+    int offset = preserved_lines + 1;
+    while (i < offset){
+        
+        Console.SetCursorPosition(0, Console.CursorTop-line);
+        Console.Write(new String(' ', Console.WindowWidth));
+        i++;
+        line++;
+    }
     Console.SetCursorPosition(0, Console.CursorTop);
     return;
 }
@@ -207,7 +218,7 @@ while(ACTIVE){
                     Console.WriteLine("Improper input! Press Enter to try again");
                     //spaghetti code for resetting the text and cursor
                     while(Console.ReadKey(true).Key != ConsoleKey.Enter);
-                    clear_input();
+                    clear_input(1);
                 }
                 
            }
@@ -231,8 +242,9 @@ while(ACTIVE){
                 //sanity check to prevent input bomb
                 if (input.Length > 300){
 
-                    Console.WriteLine("Input too long!");
-                    clear_input();
+                    Console.WriteLine("Input too long! Press enter to try again.");
+                    while(Console.ReadKey(true).Key != ConsoleKey.Enter);
+                    clear_input(1);
 
                 }else{
                     desired_desc = input.Trim();
