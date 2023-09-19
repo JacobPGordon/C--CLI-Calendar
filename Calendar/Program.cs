@@ -64,6 +64,15 @@ void update_date_file(){
     
 }
 
+void clear_input(){
+    Console.SetCursorPosition(0, Console.CursorTop-1);
+    Console.Write(new String(' ', Console.WindowWidth));
+    Console.SetCursorPosition(0, Console.CursorTop-1);
+    Console.Write(new String(' ', Console.WindowWidth));
+    Console.SetCursorPosition(0, Console.CursorTop);
+    return;
+}
+
 
 
 //Fetch dates from the file upon load
@@ -177,13 +186,14 @@ while(ACTIVE){
             //Initializers for Event object
             DateTime desired_date;
             int desired_repeat;
-            string[] desired_desc;
+            string desired_desc;
 
             //Getting the desired date from the user
             
             bool input_done = false;
             while(input_done == false){
                 var input = Console.ReadLine();
+                if(input is not null){ input = input.Trim();}
 
                 //thank God for small miracles (no regex required)
                 if(DateTime.TryParseExact(input, "MM/dd/yyyy hh:mm", null, DateTimeStyles.None, out DateTime dt)){
@@ -197,16 +207,43 @@ while(ACTIVE){
                     Console.WriteLine("Improper input! Press Enter to try again");
                     //spaghetti code for resetting the text and cursor
                     while(Console.ReadKey(true).Key != ConsoleKey.Enter);
-                    Console.SetCursorPosition(0, Console.CursorTop-1);
-                    Console.Write(new String(' ', Console.WindowWidth));
-                    Console.SetCursorPosition(0, Console.CursorTop-1);
-                    Console.Write(new String(' ', Console.WindowWidth));
-                    Console.SetCursorPosition(0, Console.CursorTop);
+                    clear_input();
                 }
                 
            }
             
            input_done = false;
+
+           //Getting description
+
+           Console.Clear();
+           Console.WriteLine("Please enter a description for this calendar entry; leave the input blank for no description.");
+           
+           while(input_done == false){
+
+            var input = Console.ReadLine();
+            if (string.IsNullOrEmpty(input)){
+
+                input_done = true;
+                desired_desc = "";
+
+            }else{
+                //sanity check to prevent input bomb
+                if (input.Length > 300){
+
+                    Console.WriteLine("Input too long!");
+                    clear_input();
+
+                }else{
+                    desired_desc = input.Trim();
+                    input_done = true;   
+                }
+
+            }
+
+           }
+
+
 
             
 
