@@ -21,14 +21,14 @@ STATES CURRENT_STATE = STATES.START;
 
 
 //handles adding dates to the internal listing
-void add_date(string in_date, string in_desc, int in_repeat){
+void add_date(DateTime in_date, string in_desc, int in_repeat){
 
     //preparing the bytes for hashing
     byte[] hashable = ASCIIEncoding.ASCII.GetBytes(in_date+in_desc);
     
     Entry new_entry = new Entry
     {
-        date = DateTime.Parse(in_date),
+        date = in_date,
         desc = in_desc,
         repeat = in_repeat,
         id = MD5.HashData(hashable),
@@ -65,6 +65,7 @@ void update_date_file(){
     
 }
 
+//Clears the console up to the line given by the input number (3 preserves the first 3 lines, etc.)
 void clear_input(int preserved_lines){
 
     //counter for loops
@@ -177,7 +178,7 @@ while(ACTIVE){
               //Displaying dates  
               foreach (Entry date in dates){
         
-                Console.WriteLine("{0}: {1}", date.date.ToString("MM/dd/YYYY"), date.desc);
+                Console.WriteLine("{0}: {1}", date.date.ToString("MM/dd/yyyy"), date.desc);
 
                 }  
 
@@ -194,9 +195,9 @@ while(ACTIVE){
             Console.WriteLine("Please enter a date formatted in mm/dd/yyyy hh:mm");
             
             //Initializers for Event object
-            DateTime desired_date;
-            int desired_repeat;
-            string desired_desc;
+            DateTime desired_date = new DateTime();
+            int desired_repeat = 0;
+            string desired_desc = "";
 
             //Getting the desired date from the user
             
@@ -254,6 +255,48 @@ while(ACTIVE){
 
            }
 
+            input_done = false;
+
+           //Getting repeat (if any)
+
+           Console.Clear();
+           Console.WriteLine("Please enter the number of minutes you would like to have inbetween notifications for this item; leave blank for none.");
+
+           while(input_done == false){
+
+            var input = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(input)){
+                input_done = true;
+                desired_repeat = 0;
+                break;
+            }
+
+            input = input.Trim();
+            if(int.TryParse(input, out var input_int) && input.Contains(".") == false){
+                input_done = true;
+                desired_repeat = input_int;
+            }else{
+                
+                Console.WriteLine("Non-numerical input! Press enter to try again.");
+                while(Console.ReadKey(true).Key != ConsoleKey.Enter);
+                clear_input(1);
+
+            }
+
+
+           }
+
+           add_date(desired_date, desired_desc, desired_repeat);
+           Console.WriteLine("Date added! Press enter to return to your calender.");
+           while(Console.ReadKey(true).Key != ConsoleKey.Enter);
+           CURRENT_STATE = STATES.CALENDAR;
+
+
+
+
+           
+
 
 
             
@@ -264,6 +307,7 @@ while(ACTIVE){
         case STATES.EXIT:
             Console.Clear();
             ACTIVE = false;
+            update_date_file();
             Console.WriteLine("Have a nice day!");
             Thread.Sleep(1000);
             break;
