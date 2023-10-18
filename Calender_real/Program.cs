@@ -55,9 +55,10 @@ void update_date_file(){
     }
 
     File.Move("./TEMP", DFILE,true);    
-    Console.WriteLine("***Autosaved***");
+    if(current_state != STATES.EXIT) {Console.WriteLine("***Autosaved***");}
+    else{Console.WriteLine("Saving: Please Wait");}
     Thread.Sleep(3000);
-    if(current_state == CURRENT_STATE){
+    if(current_state == CURRENT_STATE && CURRENT_STATE != STATES.EXIT){
         Console.SetCursorPosition(0, Console.CursorTop-1);
         Console.Write(new String(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, Console.CursorTop-1);
@@ -176,9 +177,10 @@ while(ACTIVE){
 
             else{
               //Displaying dates  
+              int number = 0;
               foreach (Entry date in dates){
-        
-                Console.WriteLine("{0}: {1}", date.date.ToString("MM/dd/yyyy"), date.desc);
+                number++;
+                Console.WriteLine("{0}. {1} : {2}",number, date.date.ToString("MM/dd/yyyy HH:mm"), date.desc);
 
                 }  
 
@@ -209,10 +211,23 @@ while(ACTIVE){
                 //thank God for small miracles (no regex required)
                 if(DateTime.TryParseExact(input, "MM/dd/yyyy hh:mm", null, DateTimeStyles.None, out DateTime dt)){
 
-                    desired_date = dt;
-                    input_done = true;
-                    break;
+                    DateTime current_date = DateTime.Now;
+                    if(DateTime.Compare(dt,current_date) < 0){
 
+                        Console.WriteLine("This date is in the past! Please try again.");
+                        //spaghetti code for resetting the text and cursor
+                        while(Console.ReadKey(true).Key != ConsoleKey.Enter);
+                        clear_input(1);
+
+                    }else{
+
+                        desired_date = dt;
+                        input_done = true;
+                        break;
+                    }
+
+
+                
                 }else{
 
                     Console.WriteLine("Improper input! Press Enter to try again");
@@ -236,7 +251,7 @@ while(ACTIVE){
             if (string.IsNullOrEmpty(input)){
 
                 input_done = true;
-                desired_desc = "";
+                desired_desc = "[No description]";
 
             }else{
                 //sanity check to prevent input bomb
@@ -291,16 +306,6 @@ while(ACTIVE){
            Console.WriteLine("Date added! Press enter to return to your calender.");
            while(Console.ReadKey(true).Key != ConsoleKey.Enter);
            CURRENT_STATE = STATES.CALENDAR;
-
-
-
-
-           
-
-
-
-            
-
 
             break;
 
