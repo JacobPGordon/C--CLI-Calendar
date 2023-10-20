@@ -18,6 +18,7 @@ using System.Runtime.InteropServices;
 string DFILE = "./dates_file.csv";
 List<Entry> dates = new List<Entry>();
 STATES CURRENT_STATE = STATES.START;
+int bottom_cursor = 0;
 
 
 //handles adding dates to the internal listing
@@ -66,7 +67,9 @@ void update_date_file(){
     
 }
 
-//Clears the console up to the line given by the input number (3 preserves the first 3 lines, etc.)
+//Clears the console up to the line given by the input number (3 preserves the first 3 lines, etc.)\
+//For removal of lines going bottom to top, you can pass in CursorTop minus the number of lines you want removed; this is useful for 
+//removing things from the bottom when the console size is determined at runtime (such as removing an UI element after printing a list of unknown size)
 void clear_input(int preserved_lines){
 
     //counter for loops
@@ -127,6 +130,11 @@ STATES Controller(){
             if (current_key == ConsoleKey.E){
                 return STATES.EXIT;
             }
+
+            //Removing date handler
+            if (current_key == ConsoleKey.D){
+                return STATES.REMOVE;
+            }
             
             //Adding date handler
             if (current_key == ConsoleKey.A){
@@ -184,10 +192,12 @@ while(ACTIVE){
 
                 }  
 
+
             }
 
             Console.WriteLine("\n(A)dd new entry, (D)elete entry, (E)xit application");
-            
+
+            bottom_cursor = Console.CursorTop;
             CURRENT_STATE = Controller();
             break;
 
@@ -317,6 +327,19 @@ while(ACTIVE){
             Thread.Sleep(1000);
             break;
 
+        //Removing calendar entries
+        case STATES.REMOVE:
+            if(dates.Count == 0){
+                Console.WriteLine("No entries to delete!");
+                Thread.Sleep(1000);
+                clear_input(bottom_cursor-1);
+                CURRENT_STATE = STATES.CALENDAR;
+                break;
+            }
+            clear_input(bottom_cursor-1);
+            Console.WriteLine("Please press the number for the entry you want to delete, or hit d again to cancel");
+            break;
+
         default:
 
             // if something goes terribly wrong or the code does something impossible we try to save and kill the app
@@ -340,5 +363,6 @@ enum STATES{
     CALENDAR,
     EXIT,
     ADD,
+    REMOVE,
 }
 
