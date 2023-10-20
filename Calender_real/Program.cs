@@ -46,6 +46,14 @@ void remove_date(byte[] id){
 
 }
 
+//ClearBuffer method taken from https://stackoverflow.com/questions/64621972/clearing-the-keyboard-buffer-or-blocking-input-c-console
+static void ClearBuffer()
+{
+    while (Console.KeyAvailable) {
+        Console.ReadKey(true);
+    }            
+}
+
 //every sixty seconds or upon closing the application, the date file is automatically updated; due to the limitations of CSV-Helper it
 //has to be recreated
 void update_date_file(){
@@ -329,15 +337,56 @@ while(ACTIVE){
 
         //Removing calendar entries
         case STATES.REMOVE:
+
             if(dates.Count == 0){
+
                 Console.WriteLine("No entries to delete!");
                 Thread.Sleep(1000);
-                clear_input(bottom_cursor-1);
+
                 CURRENT_STATE = STATES.CALENDAR;
                 break;
+
             }
+
             clear_input(bottom_cursor-1);
+            bool deletions_done = false;
             Console.WriteLine("Please press the number for the entry you want to delete, or hit d again to cancel");
+
+            //control loop for deletions
+            while(deletions_done == false){
+                
+                //Assistance from https://stackoverflow.com/questions/28955029/how-do-i-convert-a-console-readkey-to-an-int-c-sharp
+
+                ConsoleKeyInfo user_input; 
+
+                user_input = Console.ReadKey(true);
+                //Cancel key
+                if(user_input.Key == ConsoleKey.D){deletions_done = true;}
+                //We want to exclude zero because entries are listed 1-9
+                if(char.IsDigit(user_input.KeyChar) && user_input.KeyChar != '0'){
+
+                    //Checking if that entry exists in the current scope
+                    int input_number = int.Parse(user_input.KeyChar.ToString());
+
+                    if(input_number > dates.Count){
+                        
+                        Console.WriteLine("That entry doesn't exist!");
+                        Thread.Sleep(1000);
+                        ClearBuffer();
+                        clear_input(Console.CursorTop-1);
+
+                    }else{
+                        
+                    }
+
+                }
+                
+
+
+
+            }
+
+            CURRENT_STATE = STATES.CALENDAR;
             break;
 
         default:
