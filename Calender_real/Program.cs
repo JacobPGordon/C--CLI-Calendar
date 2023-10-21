@@ -130,6 +130,7 @@ void load_dates(){
 STATES Controller(){
     ConsoleKey current_key;
     while(true){
+        ClearBuffer();
         current_key = Console.ReadKey(true).Key;
 
         //Calendar page
@@ -181,6 +182,7 @@ while(ACTIVE){
     
             Console.WriteLine("\n\nWelcome back!");
             Console.WriteLine("Please press enter to continue");
+            ClearBuffer();
             while(Console.ReadKey(true).Key != ConsoleKey.Enter);
             CURRENT_STATE = STATES.CALENDAR;
             break;
@@ -234,6 +236,7 @@ while(ACTIVE){
 
                         Console.WriteLine("This date is in the past! Please try again.");
                         //spaghetti code for resetting the text and cursor
+                        ClearBuffer();
                         while(Console.ReadKey(true).Key != ConsoleKey.Enter);
                         clear_input(1);
 
@@ -250,6 +253,7 @@ while(ACTIVE){
 
                     Console.WriteLine("Improper input! Press Enter to try again");
                     //spaghetti code for resetting the text and cursor
+                    ClearBuffer();
                     while(Console.ReadKey(true).Key != ConsoleKey.Enter);
                     clear_input(1);
                 }
@@ -276,6 +280,7 @@ while(ACTIVE){
                 if (input.Length > 300){
 
                     Console.WriteLine("Input too long! Press enter to try again.");
+                    ClearBuffer();
                     while(Console.ReadKey(true).Key != ConsoleKey.Enter);
                     clear_input(1);
 
@@ -312,6 +317,7 @@ while(ACTIVE){
             }else{
                 
                 Console.WriteLine("Non-numerical input! Press enter to try again.");
+                ClearBuffer();
                 while(Console.ReadKey(true).Key != ConsoleKey.Enter);
                 clear_input(1);
 
@@ -322,6 +328,7 @@ while(ACTIVE){
 
            add_date(desired_date, desired_desc, desired_repeat);
            Console.WriteLine("Date added! Press enter to return to your calender.");
+           ClearBuffer();
            while(Console.ReadKey(true).Key != ConsoleKey.Enter);
            CURRENT_STATE = STATES.CALENDAR;
 
