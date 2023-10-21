@@ -72,8 +72,6 @@ void update_date_file(){
         Console.Write(new String(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, Console.CursorTop-1);
     }
-
-
     
 }
 
@@ -252,6 +250,7 @@ while(ACTIVE){
                         input_done = true;
                         break;
                     }
+
 
                 
                 }else{
