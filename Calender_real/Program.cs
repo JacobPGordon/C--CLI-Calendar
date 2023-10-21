@@ -214,7 +214,8 @@ while(ACTIVE){
         case STATES.ADD:
 
             Console.Clear();
-            Console.WriteLine("Please enter a date formatted in mm/dd/yyyy hh:mm");
+            Console.WriteLine("Please enter a date formatted in mm/dd/yyyy hh:mm.");
+            Console.WriteLine("(C)ancel");
             
             //Initializers for Event object
             DateTime desired_date = new DateTime();
@@ -227,7 +228,10 @@ while(ACTIVE){
             while(input_done == false){
                 var input = Console.ReadLine();
                 if(input is not null){ input = input.Trim();}
-
+                if(input == "C" || input == "c"){
+                    CURRENT_STATE = STATES.CALENDAR;
+                    goto case STATES.CALENDAR;
+                }
                 //thank God for small miracles (no regex required)
                 if(DateTime.TryParseExact(input, "MM/dd/yyyy hh:mm", null, DateTimeStyles.None, out DateTime dt)){
 
@@ -238,7 +242,7 @@ while(ACTIVE){
                         //spaghetti code for resetting the text and cursor
                         ClearBuffer();
                         while(Console.ReadKey(true).Key != ConsoleKey.Enter);
-                        clear_input(1);
+                        clear_input(2);
 
                     }else{
 
@@ -255,7 +259,7 @@ while(ACTIVE){
                     //spaghetti code for resetting the text and cursor
                     ClearBuffer();
                     while(Console.ReadKey(true).Key != ConsoleKey.Enter);
-                    clear_input(1);
+                    clear_input(2);
                 }
                 
            }
@@ -266,6 +270,7 @@ while(ACTIVE){
 
            Console.Clear();
            Console.WriteLine("Please enter a description for this calendar entry; leave the input blank for no description.");
+        Console.WriteLine("(C)ancel");
            
            while(input_done == false){
 
@@ -276,13 +281,17 @@ while(ACTIVE){
                 desired_desc = "[No description]";
 
             }else{
+                if(input == "C" || input == "c"){
+                    CURRENT_STATE = STATES.CALENDAR;
+                    goto case STATES.CALENDAR;
+                }
                 //sanity check to prevent input bomb
                 if (input.Length > 300){
 
                     Console.WriteLine("Input too long! Press enter to try again.");
                     ClearBuffer();
                     while(Console.ReadKey(true).Key != ConsoleKey.Enter);
-                    clear_input(1);
+                    clear_input(2);
 
                 }else{
                     desired_desc = input.Trim();
@@ -299,7 +308,7 @@ while(ACTIVE){
 
            Console.Clear();
            Console.WriteLine("Please enter the number of minutes you would like to have inbetween notifications for this item; leave blank for none.");
-
+           Console.WriteLine("(C)ancel");
            while(input_done == false){
 
             var input = Console.ReadLine();
@@ -311,6 +320,10 @@ while(ACTIVE){
             }
 
             input = input.Trim();
+            if(input == "C" || input == "c"){
+                    CURRENT_STATE = STATES.CALENDAR;
+                    goto case STATES.CALENDAR;
+                }
             if(int.TryParse(input, out var input_int) && input.Contains(".") == false){
                 input_done = true;
                 desired_repeat = input_int;
@@ -319,7 +332,7 @@ while(ACTIVE){
                 Console.WriteLine("Non-numerical input! Press enter to try again.");
                 ClearBuffer();
                 while(Console.ReadKey(true).Key != ConsoleKey.Enter);
-                clear_input(1);
+                clear_input(2);
 
             }
 
