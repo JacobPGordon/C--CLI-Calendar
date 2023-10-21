@@ -1,0 +1,17 @@
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\bin\Debug\net7.0-windows\Calender_real.exe
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\bin\Debug\net7.0-windows\Calender_real.deps.json
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\bin\Debug\net7.0-windows\Calender_real.runtimeconfig.json
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\bin\Debug\net7.0-windows\Calender_real.dll
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\bin\Debug\net7.0-windows\Calender_real.pdb
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\bin\Debug\net7.0-windows\CsvHelper.dll
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\Calender_real.csproj.AssemblyReference.cache
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\Calender_real.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\Calender_real.AssemblyInfoInputs.cache
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\Calender_real.AssemblyInfo.cs
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\Calender_real.csproj.CoreCompileInputs.cache
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\Calender_real.csproj.CopyComplete
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\Calender_real.dll
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\refint\Calender_real.dll
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\Calender_real.pdb
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\Calender_real.genruntimeconfig.cache
+C:\Users\jkego\Desktop\CsharpProjects\Calender_real\obj\Debug\net7.0-windows\ref\Calender_real.dll

@@ -34,7 +34,7 @@ void add_date(DateTime in_date, string in_desc, int in_repeat){
         repeat = in_repeat,
         id = MD5.HashData(hashable),
     };
-    
+
     dates.Add(new_entry);
     
 }
@@ -72,6 +72,8 @@ void update_date_file(){
         Console.Write(new String(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, Console.CursorTop-1);
     }
+
+
     
 }
 
@@ -250,7 +252,6 @@ while(ACTIVE){
                         input_done = true;
                         break;
                     }
-
 
                 
                 }else{
