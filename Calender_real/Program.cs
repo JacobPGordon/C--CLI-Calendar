@@ -351,14 +351,16 @@ while(ACTIVE){
             clear_input(bottom_cursor-1);
             bool deletions_done = false;
             Console.WriteLine("Please press the number for the entry you want to delete, or hit d again to cancel");
+            while(deletions_done == false){
+            
 
             //control loop for deletions
-            while(deletions_done == false){
+            
                 
                 //Assistance from https://stackoverflow.com/questions/28955029/how-do-i-convert-a-console-readkey-to-an-int-c-sharp
 
                 ConsoleKeyInfo user_input; 
-
+                ClearBuffer();
                 user_input = Console.ReadKey(true);
                 //Cancel key
                 if(user_input.Key == ConsoleKey.D){deletions_done = true;}
@@ -372,11 +374,37 @@ while(ACTIVE){
                         
                         Console.WriteLine("That entry doesn't exist!");
                         Thread.Sleep(1000);
-                        ClearBuffer();
                         clear_input(Console.CursorTop-1);
 
                     }else{
                         
+                        //Deletion process
+                        Console.WriteLine("Are you sure you want to delete this entry? Press Y to confirm, or N to cancel.");
+
+                        //Confirmation process
+                        bool confirmation = false;
+                        
+                        while(confirmation == false){
+                            ClearBuffer();
+                            user_input = Console.ReadKey(true);
+
+                            if(user_input.KeyChar == 'y' || user_input.KeyChar == 'Y'){
+                                confirmation = true;
+                                deletions_done = true;
+                                dates.RemoveAt(input_number-1); 
+                            }
+
+                            if(user_input.KeyChar == 'n' || user_input.KeyChar == 'N'){
+                                confirmation = true;
+                                clear_input(Console.CursorTop-1);
+                            }
+
+
+                        }
+
+                        
+
+
                     }
 
                 }
