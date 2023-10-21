@@ -34,7 +34,7 @@ void add_date(DateTime in_date, string in_desc, int in_repeat){
         repeat = in_repeat,
         id = MD5.HashData(hashable),
     };
-
+    
     dates.Add(new_entry);
     
 }
